@@ -7,14 +7,21 @@ class CustomerDto:
     birth_date: datetime
     document: str
     email: str
+    id: str | None
 
     def __init__(
-        self, name: str, birth_date: datetime, document: str, email: str
+        self,
+        name: str,
+        birth_date: datetime,
+        document: str,
+        email: str,
+        id: str | None = None,
     ) -> None:
         self.name = name
         self.birth_date = birth_date
         self.document = document
         self.email = email
+        self.id = id
 
     def to_domain(self):
         return Customer(self.name, self.birth_date, self.document, self.email)
