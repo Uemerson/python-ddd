@@ -8,7 +8,7 @@
       "name": "Python: Django",
       "type": "python",
       "request": "launch",
-      "program": "${workspaceFolder}/infrastructure_django/api/manage.py",
+      "program": "${workspaceFolder}/infrastructure/django/api/manage.py",
       "args": [
         "runserver"
       ],
