@@ -8,6 +8,10 @@ packages = [{include = "python_ddd"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+Flask = "^2.2.2"
+flask-sqlalchemy = "^3.0.2"
+Django = "^4.1.4"
+djangorestframework = "^3.14.0"
 
 
 [tool.poetry.group.dev.dependencies]
