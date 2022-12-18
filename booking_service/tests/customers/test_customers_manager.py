@@ -1,9 +1,10 @@
 import unittest
 from datetime import datetime
+
 from booking_service.application.customers.customer_dto import CustomerDto
 from booking_service.application.customers.customer_manager import CustomerManager
-from booking_service.helpers.http_helper import created, bad_request, server_error
 from booking_service.application.customers.customer_storage import CustomerStorage
+from booking_service.helpers.http_helper import bad_request, created, ok, server_error
 
 
 class DummyStorage(CustomerStorage):
@@ -27,6 +28,26 @@ class DummyStorage(CustomerStorage):
             document="valid_document",
             email="valid_email",
         )
+
+    def get_all_customers(self) -> list[CustomerDto]:
+        return [
+            CustomerDto(
+                id="valid_id",
+                name="valid_name",
+                birth_date=datetime(
+                    datetime.utcnow().year - 20,
+                    datetime.utcnow().month,
+                    datetime.utcnow().day,
+                    datetime.utcnow().hour,
+                    datetime.utcnow().minute,
+                    datetime.utcnow().second,
+                    datetime.utcnow().microsecond,
+                    datetime.utcnow().tzinfo,
+                ),
+                document="valid_document",
+                email="valid_email",
+            )
+        ]
 
 
 class CustomersManagerTests(unittest.TestCase):
@@ -82,8 +103,16 @@ class CustomersManagerTests(unittest.TestCase):
         )
         manager = CustomerManager(self.dummy_storage)
         http_response = manager.create_new_customer(customer_dto)
-        assert http_response["statusCode"] == 500
-        assert str(http_response["body"]) == str(server_error()["body"])
+        self.assertEqual(http_response["statusCode"], 500)
+        self.assertEqual(str(http_response["body"]), str(server_error()["body"]))
+
+    def test_should_return_ok_if_get_all_customers(self):
+        manager = CustomerManager(self.dummy_storage)
+        http_response = manager.get_all_customers()
+        self.assertEqual(
+            http_response,
+            ok(http_response["body"]),
+        )
 
 
 if __name__ == "__main__":
