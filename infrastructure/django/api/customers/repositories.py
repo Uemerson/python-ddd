@@ -1,7 +1,9 @@
-from booking_service.application.customers.customer_storage import CustomerStorage
-from booking_service.application.customers.customer_dto import CustomerDto
-from .models import Customer
 from django.db import transaction
+
+from booking_service.application.customers.customer_dto import CustomerDto
+from booking_service.application.customers.customer_storage import CustomerStorage
+
+from .models import Customer
 
 
 class CustomerRepository(CustomerStorage):
@@ -31,3 +33,10 @@ class CustomerRepository(CustomerStorage):
     def get_customer_by_id(self, id: str) -> CustomerDto:
         customer = Customer.objects.get(id=id)
         return self._model_to_dto(customer)
+
+    def get_all_customers(self) -> list[CustomerDto]:
+        customers = Customer.objects.all()
+        customers_dto: list[CustomerDto] = []
+        for customer in customers:
+            customers_dto.append(self._model_to_dto(customer))
+        return customers_dto

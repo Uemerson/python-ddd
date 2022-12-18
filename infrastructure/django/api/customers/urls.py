@@ -5,10 +5,6 @@ from .views import CustomerViewSet
 urlpatterns = [
     path(
         "customer",
-        CustomerViewSet.as_view(
-            {
-                "post": "create",
-            }
-        ),
+        CustomerViewSet.as_view({"post": "create", "get": "list"}),
     ),
 ]

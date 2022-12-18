@@ -6,6 +6,7 @@ from booking_service.application.customers.customer_dto import CustomerDto
 from booking_service.application.customers.customer_manager import CustomerManager
 
 from .repositories import CustomerRepository
+from .serializers import CustomerSerializer
 
 
 class CustomerViewSet(viewsets.ViewSet):
@@ -28,5 +29,12 @@ class CustomerViewSet(viewsets.ViewSet):
             http_response["body"]
             if http_response["statusCode"] >= 200 and http_response["statusCode"] <= 299
             else {"error": str(http_response["body"])},
+            status=http_response["statusCode"],
+        )
+
+    def list(self, request):
+        http_response = self.__customer_manager.get_all_customers()
+        return Response(
+            CustomerSerializer(http_response["body"], many=True).data,
             status=http_response["statusCode"],
         )

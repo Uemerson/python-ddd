@@ -1,11 +1,12 @@
-from .customer_storage import CustomerStorage
 from booking_service.domain.customers.exceptions import (
     CustomerShouldBeOlderThan18,
     InvalidCustomerDocumentException,
     MissingParamError,
 )
+from booking_service.helpers.http_helper import bad_request, created, ok, server_error
+
 from .customer_dto import CustomerDto
-from booking_service.helpers.http_helper import created, bad_request, server_error, ok
+from .customer_storage import CustomerStorage
 
 
 class CustomerManager:
@@ -32,3 +33,7 @@ class CustomerManager:
     def get_customer_by_id(self, customer_id: str):
         customer = self.storage.get_customer_by_id(customer_id)
         return ok(data=customer)
+
+    def get_all_customers(self):
+        customers = self.storage.get_all_customers()
+        return ok(data=customers)
