@@ -1,11 +1,12 @@
 import unittest
 from datetime import datetime
-from booking_service.domain.customers.exceptions import (
-    MissingParamError,
-    InvalidCustomerDocumentException,
-    CustomerShouldBeOlderThan18,
-)
+
 from booking_service.domain.customers.entities import Customer
+from booking_service.domain.customers.exceptions import (
+    CustomerShouldBeOlderThan18,
+    InvalidCustomerDocumentException,
+    MissingParamError,
+)
 
 
 class CustomersAggregateTests(unittest.TestCase):
